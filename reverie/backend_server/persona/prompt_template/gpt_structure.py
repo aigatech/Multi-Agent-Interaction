@@ -266,7 +266,15 @@ def safe_generate_response(prompt,
   for i in range(repeat): 
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
     if func_validate(curr_gpt_response, prompt=prompt): 
-      return func_clean_up(curr_gpt_response, prompt=prompt)
+      try:
+        return func_clean_up(curr_gpt_response, prompt=prompt)
+      except Exception as e:
+        print("\n"*100)
+        print(e)
+        print("\n"*100)
+        print(curr_gpt_response, prompt)
+        print("\n"*100)
+        exit()
     if verbose: 
       print ("---- repeat count: ", i, curr_gpt_response)
       print (curr_gpt_response)
