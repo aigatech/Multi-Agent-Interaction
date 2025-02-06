@@ -28,7 +28,8 @@ def ChatGPT_request(prompt):
   try: 
     completion = openai.ChatCompletion.create(
     model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}]
+    messages=[
+      {"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
   

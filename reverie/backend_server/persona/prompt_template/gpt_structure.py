@@ -208,9 +208,9 @@ def GPT_request(prompt, gpt_parameter):
   """
   temp_sleep()
   try: 
-    response = openai.Completion.create(
+    response = openai.ChatCompletion.create(
                 model=gpt_parameter["engine"],
-                prompt=prompt,
+                messages=[{"role": "user", "content": prompt}],
                 temperature=gpt_parameter["temperature"],
                 max_tokens=gpt_parameter["max_tokens"],
                 top_p=gpt_parameter["top_p"],
@@ -218,8 +218,9 @@ def GPT_request(prompt, gpt_parameter):
                 presence_penalty=gpt_parameter["presence_penalty"],
                 stream=gpt_parameter["stream"],
                 stop=gpt_parameter["stop"],)
-    return response.choices[0].text
-  except: 
+    return response["choices"][0]["message"]["content"]
+  except Exception as e: 
+    print(e)
     print ("TOKEN LIMIT EXCEEDED")
     return "TOKEN LIMIT EXCEEDED"
 
@@ -265,7 +266,15 @@ def safe_generate_response(prompt,
   for i in range(repeat): 
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
     if func_validate(curr_gpt_response, prompt=prompt): 
-      return func_clean_up(curr_gpt_response, prompt=prompt)
+      try:
+        return func_clean_up(curr_gpt_response, prompt=prompt)
+      except Exception as e:
+        print("\n"*100)
+        print(e)
+        print("\n"*100)
+        print(curr_gpt_response, prompt)
+        print("\n"*100)
+        exit()
     if verbose: 
       print ("---- repeat count: ", i, curr_gpt_response)
       print (curr_gpt_response)
@@ -282,7 +291,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
 
 
 if __name__ == '__main__':
-  gpt_parameter = {"engine": "text-davinci-003", "max_tokens": 50, 
+  gpt_parameter = {"engine": "gpt-4o-mini", "max_tokens": 50, 
                    "temperature": 0, "top_p": 1, "stream": False,
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}

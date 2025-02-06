@@ -1,4 +1,4 @@
-
+# This is the AI@GT clone of the Simulacra paper designed to incorporate a Theory of Mind and evaluate its effects on agentic society
 
 # Generative Agents: Interactive Simulacra of Human Behavior 
 
