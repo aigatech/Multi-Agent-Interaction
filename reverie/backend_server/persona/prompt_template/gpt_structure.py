@@ -20,7 +20,7 @@ def ChatGPT_single_request(prompt):
   temp_sleep()
 
   completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    model="gpt-4o-mini", 
     messages=[{"role": "user", "content": prompt}]
   )
   return completion["choices"][0]["message"]["content"]
@@ -72,7 +72,8 @@ def ChatGPT_request(prompt):
   try: 
     completion = openai.ChatCompletion.create(
     model="gpt-4o-mini", 
-    messages=[{"role": "user", "content": prompt}]
+    messages=[{"role": "system", "content": "Act like you are completion model on v1/completions. Complete sentences, fill in blanks, with no extra space, like you are just completing it. Be very concise"},
+      {"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
   
@@ -210,7 +211,8 @@ def GPT_request(prompt, gpt_parameter):
   try: 
     response = openai.ChatCompletion.create(
                 model=gpt_parameter["engine"],
-                messages=[{"role": "user", "content": prompt}],
+                messages=[{"role": "system", "content": "Act like you are completion model on v1/completions. Complete sentences, fill in blanks, with no extra space, like you are just completing it. Be very concise"},
+                  {"role": "user", "content": prompt}],
                 temperature=gpt_parameter["temperature"],
                 max_tokens=gpt_parameter["max_tokens"],
                 top_p=gpt_parameter["top_p"],

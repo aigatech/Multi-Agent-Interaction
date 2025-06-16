@@ -2157,7 +2157,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   def get_fail_safe(): 
     return "..."
 
-  gpt_param = {"engine": "gpt4o-mini", "max_tokens": 50, 
+  gpt_param = {"engine": "gpt-4o-mini", "max_tokens": 50, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/memo_on_convo_v1.txt"

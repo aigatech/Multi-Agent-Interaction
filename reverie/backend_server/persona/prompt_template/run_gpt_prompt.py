@@ -431,6 +431,7 @@ def run_gpt_prompt_task_decomp(persona,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/task_decomp_v3.txt"
   prompt_input = create_prompt_input(persona, task, duration)
+  print(prompt_input, "\n"*2, prompt_template, "\n"*100)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
 
